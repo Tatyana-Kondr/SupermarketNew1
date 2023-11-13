@@ -3,6 +3,10 @@ package Supermarket;
 import Supermarket.dao.SupermarketImpl;
 import Supermarket.model.*;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 public class SupermarketAppl {
     public static void main(String[] args) {
         SupermarketImpl supermarket = new SupermarketImpl(7);
@@ -26,8 +30,38 @@ public class SupermarketAppl {
             } else {
             System.out.println("Product this expiration date is not found.");
         }
+
+        System.out.println("-----------------Array List------------------");
+        List<Produkt> produktsList = new ArrayList<>();
+        produktsList.add(bread);
+        produktsList.add(sausage);
+        produktsList.add(milk);
+        produktsList.add(chips);
+        produktsList.add(vase);
+        produktsList.add(new Food(104, "Chocolate", 1.39, "01.12.2023", false));
+        for (Produkt p : produktsList) {
+            System.out.println(p);
+        }
+
+        System.out.println("----------------- sorted Array List ------------------");
+
+        double sum = 0;
+        for (Produkt p : produktsList) {
+            sum += p.getPrice();
+        }
+        Comparator<Produkt> comparator = new Comparator<Produkt>() {
+            @Override
+            public int compare(Produkt o1, Produkt o2) {
+                return o1.getName().compareTo(o2.getName()); // сортировка по наименованию
+            }
+        };
+        produktsList.sort(comparator);
+        for (Produkt p : produktsList) {
+            System.out.println(p);
+        }
+        System.out.print("You have " + produktsList.size() + " products ");
+        System.out.printf("for the sum of %.2f", sum);
+        System.out.println(" euro.");
+
     }
-
-
-
 }
